@@ -501,13 +501,15 @@ proc_lambda(void)
  *     prc.call(params,...)   -> obj
  *     prc[params,...]        -> obj
  *     prc.(params,...)       -> obj
+ *     prc === param          -> obj
  *
  *  Invokes the block, setting the block's parameters to the values in
  *  <i>params</i> using something close to method calling semantics.
  *  Generates a warning if multiple values are passed to a proc that
  *  expects just one (previously this silently converted the parameters
- *  to an array).  Note that prc.() invokes prc.call() with the parameters
- *  given.  It's a syntax sugar to hide "call".
+ *  to an array). Note that prc.() invokes prc.call() with the parameters
+ *  given. It's syntax sugar to hide "call". prc === param allows a proc
+ *  object to be the target of a +when+ clause in the case statement.
  *
  *  For procs created using <code>Kernel.proc</code>, generates an
  *  error if the wrong number of parameters
@@ -528,14 +530,6 @@ proc_lambda(void)
  *     prog.rb:5: wrong number of arguments (3 for 2) (ArgumentError)
  *     	from prog.rb:4:in `call'
  *     	from prog.rb:5
- */
-
-/*
- *  call-seq:
- *     prc === obj   -> result_of_proc
- *
- *  Invokes the block, with <i>obj</i> as the block's parameter.  It is
- *  to allow a proc object to be a target of +when+ clause in the case statement.
  */
 
 static VALUE
